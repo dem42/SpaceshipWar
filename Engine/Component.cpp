@@ -4,7 +4,7 @@ Component::Component(const Entity& entity) : entity(entity)
 {
 }
 
-Entity & Component::getParentEntity()
+const Entity& Component::getParentEntity() const
 {
 	return entity;
 }

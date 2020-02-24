@@ -5,7 +5,7 @@
 class Component {
 public:
 	Component(const Entity& entity);
-	Entity& getParentEntity();
+	const Entity& getParentEntity() const;
 
 private:
 	Entity entity;

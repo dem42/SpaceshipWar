@@ -1,6 +1,11 @@
 #pragma once
 
 #include <vector>
+#include <memory>
+
+#include "Game/Graphics.h"
+#include "Game/InputManager.h"
+#include "Game/ResourceManager.h"
 
 class Scene;
 class System;
@@ -16,9 +21,12 @@ public:
 	Game& operator=(const Game&) = delete;
 	Game& operator=(const Game&&) = delete;
 
-	void update(Scene& scene);
+	bool update(Scene& scene);
 
 protected:
+	Graphics graphics;
+	InputManager inputManager;
+
 	std::vector<System*> systems;
 	float deltaTime;
 };

@@ -7,6 +7,9 @@
 #include "Engine/Entity.h"
 
 #include "Components/PositionComponent.h"
+#include "Components/HeadingComponent.h"
+#include "Components/ViewComponent.h"
+#include "Components/PlayerInputComponent.h"
 
 class Scene {
 public:
@@ -16,15 +19,9 @@ public:
 
 	std::vector<Entity> entities;
 	ComponentContainer<PositionComponent> positions;
-
-	template <typename CT>
-	bool hasComponent(const Entity& entity) const;
-
-	template <typename CT>
-	CT& getComponent(const Entity& entity);
-
-	template <typename CT>
-	void addComponent(const Entity& entity, const CT& component);
+	ComponentContainer<HeadingComponent> headings;
+	ComponentContainer<ViewComponent> views;
+	ComponentContainer<PlayerInputComponent> playerInputs;
 
 private:
 	long entityIdGen = 0;
