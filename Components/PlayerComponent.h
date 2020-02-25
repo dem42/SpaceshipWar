@@ -2,11 +2,13 @@
 
 #include "Engine/Component.h"
 
-class PlayerInputComponent : public Component {
+class PlayerComponent : public Component {
 public:
-	PlayerInputComponent(const Entity& entity, const std::string& playerName) : Component(entity), playerName(playerName) {}
+	PlayerComponent(const Entity& entity, const std::string& playerName) : Component(ComponentType::PLAYER, entity), playerName(playerName) {}
 
 	std::string playerName;
+
+	float timeUntilNextShotCanBeFired = 0;
 
 	bool holdingLeftMouse = false;
 	bool pressedRightMouse = false;

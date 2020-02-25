@@ -135,26 +135,36 @@
   <ItemGroup>
     <ClCompile Include="Engine\Component.cpp" />
     <ClCompile Include="Engine\Entity.cpp" />
+    <ClCompile Include="Game\AI\EnemyBehaviour.cpp" />
     <ClCompile Include="Game\Game.cpp" />
     <ClCompile Include="Game\Graphics.cpp" />
     <ClCompile Include="Game\InputManager.cpp" />
+    <ClCompile Include="Game\LevelGenerator.cpp" />
     <ClCompile Include="Game\ResourceManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game\Scene.cpp" />
     <ClCompile Include="Systems\MovementSystem.cpp" />
     <ClCompile Include="Systems\InputHandlingSystem.cpp" />
+    <ClCompile Include="Systems\ShootingSystem.cpp" />
     <ClCompile Include="Systems\TextureLoadingSystem.cpp" />
+    <ClCompile Include="Systems\VelocityUpdateSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\EnemyComponent.h" />
     <ClInclude Include="Components\HeadingComponent.h" />
-    <ClInclude Include="Components\PlayerInputComponent.h" />
+    <ClInclude Include="Components\PlayerComponent.h" />
+    <ClInclude Include="Components\VelocityComponent.h" />
     <ClInclude Include="Components\ViewComponent.h" />
     <ClInclude Include="Engine\Component.h" />
     <ClInclude Include="Engine\ComponentContainer.h" />
+    <ClInclude Include="Engine\ComponentType.h" />
     <ClInclude Include="Engine\Entity.h" />
+    <ClInclude Include="Game\AI\EnemyBehaviour.h" />
+    <ClInclude Include="Components\ShotComponent.h" />
     <ClInclude Include="Game\Constants.h" />
     <ClInclude Include="Game\Graphics.h" />
     <ClInclude Include="Game\InputManager.h" />
+    <ClInclude Include="Game\LevelGenerator.h" />
     <ClInclude Include="Game\ResourceManager.h" />
     <ClInclude Include="Game\Scene.h" />
     <ClInclude Include="Components\PositionComponent.h" />
@@ -162,7 +172,9 @@
     <ClInclude Include="Game\Game.h" />
     <ClInclude Include="Systems\MovementSystem.h" />
     <ClInclude Include="Systems\InputHandlingSystem.h" />
+    <ClInclude Include="Systems\ShootingSystem.h" />
     <ClInclude Include="Systems\TextureLoadingSystem.h" />
+    <ClInclude Include="Systems\VelocityUpdateSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

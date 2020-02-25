@@ -4,7 +4,7 @@
 
 class HeadingComponent : public Component {
 public:
-	HeadingComponent(const Entity& entity) : Component(entity) {}
+	HeadingComponent(const Entity& entity) : Component(ComponentType::HEADING, entity) {}
 
 	float xHeading;
 	float yHeading;

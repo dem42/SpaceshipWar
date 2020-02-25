@@ -6,36 +6,43 @@
 
 #include "Game/Scene.h"
 #include "Game/Constants.h"
-#include "Components/PlayerInputComponent.h"
+#include "Components/PlayerComponent.h"
 
 void InputManager::update(Scene& scene)
 {
 	using namespace std;
 
-	auto pos = std::find_if(scene.playerInputs.begin(), scene.playerInputs.end(), [](auto& entityComponent) {
-		return entityComponent.second.playerName == SpaceWarConstants::PLAYER_1_ID;
+	auto pos = std::find_if(scene.players.begin(), scene.players.end(), [](auto& entityComponent) {
+		return entityComponent.playerName == SpaceWarConstants::PLAYER_1_ID;
 	});
-	PlayerInputComponent& player1Input = (*pos).second;
+	PlayerComponent& player1Input = (*pos);
 
 	SDL_Event event;
 	while (SDL_PollEvent(&event)) {
 		switch (event.type) {
 
 		case SDL_QUIT:
-			cout << "Quit requested" << endl;
 			closeRequested = true;
 			break;
 
-		case SDL_MOUSEBUTTONDOWN:
-			cout << "Start Shooting" << endl;
+		case SDL_MOUSEBUTTONDOWN:			
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				cout << "Start Shooting" << endl;
+				player1Input.holdingLeftMouse = true;
+			} else if (event.button.button == SDL_BUTTON_RIGHT) {
+				cout << "Use warp drive" << endl;
+				player1Input.pressedRightMouse = true;
+			}
+
 			break;
 
 		case SDL_MOUSEBUTTONUP:
-			cout << "Stop Shooting" << endl;
+			if (event.button.button == SDL_BUTTON_LEFT) {
+				player1Input.holdingLeftMouse = false;
+			}
 			break;
 
 		case SDL_MOUSEMOTION:
-			//cout << "Steering changed (" << event.motion.x << ", " << event.motion.y << ")" << endl;
 			player1Input.hasStreeringInput = true;
 			player1Input.lastMouseX = static_cast<float>(event.motion.x);
 			player1Input.lastMouseY = static_cast<float>(event.motion.y);

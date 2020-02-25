@@ -4,9 +4,11 @@
 
 class Component {
 public:
-	Component(const Entity& entity);
+	Component(ComponentType type, const Entity& entity);
 	const Entity& getParentEntity() const;
+	ComponentType getType() const;
 
 private:
+	ComponentType type;
 	Entity entity;
 };

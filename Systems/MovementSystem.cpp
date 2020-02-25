@@ -9,21 +9,27 @@
 
 void MovementSystem::update(float dt, Scene& scene)
 {
-	for (auto& heading : scene.headings) {
-		HeadingComponent& headingCompo = heading.second;
-		if (scene.positions.hasComponent(headingCompo.getParentEntity())) {
-			PositionComponent& positionCompo = scene.positions.getComponent(headingCompo.getParentEntity());
+	const float MINIMUM_APPROACH_DIST = 0.5f;
+	const double RAD_TO_DEG = (180.0 / 3.141592653589793238463);
 
-			float dx = headingCompo.xHeading - positionCompo.x;
-			float dy = headingCompo.yHeading - positionCompo.y;
-			float dist = std::sqrt(dx * dx + dy * dy);
-			dx /= dist;
-			dy /= dist;
+	for (const auto& velocity : scene.velocities) {
+		if (scene.positions.hasComponent(velocity.getParentEntity())) {
+			PositionComponent& positionCompo = scene.positions.getComponent(velocity.getParentEntity());
+						
+			if (std::fabs(velocity.magnitude) < MINIMUM_APPROACH_DIST) {
+				continue;
+			}
 			
-			float speed = std::min(dist, SpaceWarConstants::MAX_SHIP_SPEED);
-			
-			positionCompo.x += dx * speed * dt;
-			positionCompo.y += dy * speed * dt;
+			// the screen origin is in top left corner
+			float targetYaw = static_cast<float>(std::atan2(-velocity.y, velocity.x) *  RAD_TO_DEG);
+			// our images coord system starts with x pointing up -> 90 rot counter clockwise						
+			targetYaw -= 90;
+
+			//float turnSpeed = std::min((targetYaw - positionCompo.yaw) * 50, 100.0f);
+						
+			positionCompo.x += velocity.x * dt;
+			positionCompo.y += velocity.y * dt;
+			positionCompo.yaw = targetYaw;
 		}	
 	}
 }

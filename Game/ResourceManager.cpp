@@ -12,11 +12,16 @@ ResourceManager::~ResourceManager()
 }
 
 void ResourceManager::loadTexture(SDL_Renderer* renderer, TextureKey& key)
-{
-	std::cout << "Loading texture " << key.path << std::endl;
+{	
 	if (key.loaded) {
 		return;
 	}
+	if (textureBank.find(key) != textureBank.end()) {
+		key.loaded = true;
+		return;
+	}
+	std::cout << "Loading texture " << key.path << std::endl;
+
 	// creates a surface to load an image into the main memory 
 	SDL_Surface* surface;
 
@@ -62,12 +67,10 @@ TextureKey::TextureKey(const std::string & path) : path(path), loaded(false)
 
 bool TextureKey::operator==(const TextureKey& rhs) const
 {
-	return path == rhs.path && loaded == rhs.loaded;
+	return path == rhs.path;
 }
 
 std::size_t TextureHash::operator()(const TextureKey& key) const noexcept
 {
-	std::size_t h1 = std::hash<std::string>{}(key.path);
-	std::size_t h2 = std::hash<bool>{}(key.loaded);
-	return h1 ^ (h2 << 1);
+	return std::hash<std::string>{}(key.path);	
 }

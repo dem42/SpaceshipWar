@@ -1,10 +1,15 @@
 #include "Component.h"
 
-Component::Component(const Entity& entity) : entity(entity)
+Component::Component(ComponentType type, const Entity& entity) : type(type), entity(entity)
 {
 }
 
 const Entity& Component::getParentEntity() const
 {
 	return entity;
+}
+
+ComponentType Component::getType() const
+{
+	return type;
 }

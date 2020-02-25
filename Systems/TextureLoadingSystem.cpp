@@ -11,8 +11,8 @@ void TextureLoadingSystem::update(float dt, Scene& scene)
 {
 	auto& resourceManager = graphics.getResourceManager();
 	for (auto& view : scene.views) {
-		if (!view.second.textureKey.loaded) {			
-			resourceManager.loadTexture(graphics.getRenderer(), view.second.textureKey);
+		if (!view.textureKey.loaded) {			
+			resourceManager.loadTexture(graphics.getRenderer(), view.textureKey);
 		}
 	}
 }

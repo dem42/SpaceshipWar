@@ -6,6 +6,7 @@
 #include "Game/Graphics.h"
 #include "Game/InputManager.h"
 #include "Game/ResourceManager.h"
+#include "Game/LevelGenerator.h"
 
 class Scene;
 class System;
@@ -21,12 +22,16 @@ public:
 	Game& operator=(const Game&) = delete;
 	Game& operator=(const Game&&) = delete;
 
-	bool update(Scene& scene);
+	void loop();
 
 protected:
 	Graphics graphics;
 	InputManager inputManager;
+	LevelGenerator levelGenerator;
 
 	std::vector<System*> systems;
 	float deltaTime;
+
+	void updateDeltaTime();
+	void update(Scene& scene);
 };

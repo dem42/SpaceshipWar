@@ -37,6 +37,12 @@
     <Filter Include="Source Files\Systems">
       <UniqueIdentifier>{b2870040-ff8e-4a20-a1d3-77dd00efa9ab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game\AI">
+      <UniqueIdentifier>{e59dad03-d4d8-4d83-b1fd-e38ee146d8a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game\AI">
+      <UniqueIdentifier>{9434bee8-0d86-437e-9a6d-de952a42476d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -71,6 +77,18 @@
     </ClCompile>
     <ClCompile Include="Systems\InputHandlingSystem.cpp">
       <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\VelocityUpdateSystem.cpp">
+      <Filter>Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\AI\EnemyBehaviour.cpp">
+      <Filter>Source Files\Game\AI</Filter>
+    </ClCompile>
+    <ClCompile Include="Game\LevelGenerator.cpp">
+      <Filter>Source Files\Game</Filter>
+    </ClCompile>
+    <ClCompile Include="Systems\ShootingSystem.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,17 +131,41 @@
     <ClInclude Include="Game\Constants.h">
       <Filter>Header Files\Game</Filter>
     </ClInclude>
-    <ClInclude Include="Components\PlayerInputComponent.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="Systems\TextureLoadingSystem.h">
       <Filter>Header Files\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Components\HeadingComponent.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Systems\InputHandlingSystem.h">
       <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine\ComponentType.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\VelocityUpdateSystem.h">
+      <Filter>Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\HeadingComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\VelocityComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\AI\EnemyBehaviour.h">
+      <Filter>Header Files\Game\AI</Filter>
+    </ClInclude>
+    <ClInclude Include="Game\LevelGenerator.h">
+      <Filter>Header Files\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\ShotComponent.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems\ShootingSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\EnemyComponent.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Components\PlayerComponent.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
