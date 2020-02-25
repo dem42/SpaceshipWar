@@ -7,7 +7,7 @@
 template <typename T, ComponentType Type, typename Iterator = typename std::vector<T>::iterator>
 class ComponentContainer {
 public:
-	void addComponent(Entity& entity, const T& component);
+	void addComponent(T&& component);
 	T& getComponent(const Entity& entity);
 	bool hasComponent(const Entity& entity) const;
 
@@ -19,9 +19,10 @@ private:
 };
 
 template<typename T, ComponentType Type, typename Iterator>
-inline void ComponentContainer<T, Type, Iterator>::addComponent(Entity& entity, const T& component)
+inline void ComponentContainer<T, Type, Iterator>::addComponent(T&& component)
 {	
 	int compoIdx = static_cast<int>(components.size());
+	auto& entity = component.getEntity();
 	entity.setComponentIdx(Type, compoIdx);
 	components.emplace_back(component);
 }

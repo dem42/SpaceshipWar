@@ -1,12 +1,17 @@
 #include "Component.h"
 
-Component::Component(ComponentType type, const Entity& entity) : type(type), entity(entity)
+Component::Component(ComponentType type, const std::shared_ptr<Entity>& entity) : type(type), entity(entity)
 {
 }
 
-const Entity& Component::getParentEntity() const
+Entity& Component::getEntity()
 {
-	return entity;
+	return *entity;
+}
+
+const Entity& Component::getEntity() const
+{
+	return *entity;
 }
 
 ComponentType Component::getType() const

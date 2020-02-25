@@ -2,24 +2,38 @@
 
 #include <sstream>
 
-Entity Scene::createEntity(const std::string& name)
+std::shared_ptr<Entity> Scene::createEntity(const std::string& name)
 {
-	Entity entity(name, entityIdGen++);
-	return entity;
+	auto newEntity = std::make_shared<Entity>(name, entityIdGen++);
+	entities.emplace_back(newEntity);
+	return newEntity;
 }
 
 void Scene::createPoolOfShotEntities(int poolSize)
-{
+{	
 	for (int i = 0; i < poolSize; i++) {
 
 		std::stringstream strbuf;
 		strbuf << "Shot " << i;
 		auto torpedoEntity = createEntity(strbuf.str());
 				
-		shots.addComponent(torpedoEntity, ShotComponent{ torpedoEntity });
-		headings.addComponent(torpedoEntity, HeadingComponent{ torpedoEntity });
-		velocities.addComponent(torpedoEntity, VelocityComponent{ torpedoEntity });
-		positions.addComponent(torpedoEntity, PositionComponent{ torpedoEntity, 0, 0, 0 });
-		views.addComponent(torpedoEntity, ViewComponent{ torpedoEntity, TextureKey{"images/torpedo.png"}, 100, 100, -90, false });
+		shots.addComponent(ShotComponent{ torpedoEntity });
+		velocities.addComponent(VelocityComponent{ torpedoEntity });
+		positions.addComponent(PositionComponent{ torpedoEntity, 0, 0, 0 });
+		views.addComponent(ViewComponent{ torpedoEntity, TextureKey{"images/torpedo_orange.png"}, 20, 20, -90, false });
 	}
+	shotPoolRingBufTail = shots.begin();
+}
+
+
+ShotComponent& Scene::getShotFromPool()
+{
+	if (shotPoolRingBufTail == shots.end()) {
+		shotPoolRingBufTail = shots.begin();
+	}
+
+	auto& shotComp = *shotPoolRingBufTail;
+	shotPoolRingBufTail++;
+
+	return shotComp;
 }

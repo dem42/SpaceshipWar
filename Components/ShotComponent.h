@@ -4,7 +4,7 @@
 
 class ShotComponent : public Component {
 public:
-	ShotComponent(const Entity& entity) : Component(ComponentType::SHOT, entity) {}
+	ShotComponent(const std::shared_ptr<Entity>& entity) : Component(ComponentType::SHOT, entity) {}
 
 	bool firedByPlayer = false;
 	float age = 0;

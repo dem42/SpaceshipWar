@@ -31,8 +31,8 @@ void Graphics::render(Scene& scene)
 	SDL_RenderClear(rend);
 
 	for (const auto& viewComponent : scene.views) {		
-		if (scene.positions.hasComponent(viewComponent.getParentEntity())) {
-			auto& positionComponent = scene.positions.getComponent(viewComponent.getParentEntity());
+		if (scene.positions.hasComponent(viewComponent.getEntity())) {
+			auto& positionComponent = scene.positions.getComponent(viewComponent.getEntity());
 
 			SDL_Rect screenRect = { static_cast<int>(positionComponent.x - viewComponent.width / 2), static_cast<int>(positionComponent.y - viewComponent.height/ 2), viewComponent.width, viewComponent.height };
 			SDL_Point center = { static_cast<int>(positionComponent.x + viewComponent.width / 2), static_cast<int>(positionComponent.y + viewComponent.height / 2) };

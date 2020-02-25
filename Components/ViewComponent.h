@@ -8,7 +8,7 @@
 
 class ViewComponent : public Component {
 public:
-	ViewComponent(const Entity& entity, const TextureKey& textureKey, int height, int width, int baseRotationDeg, bool visible) 
+	ViewComponent(const std::shared_ptr<Entity>& entity, const TextureKey& textureKey, int height, int width, int baseRotationDeg, bool visible)
 		: Component(ComponentType::VIEW, entity), textureKey(textureKey), height(height), width(width), imageBaseRotation(baseRotationDeg), visible(visible)
 	{
 	}

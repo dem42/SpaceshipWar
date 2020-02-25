@@ -9,6 +9,8 @@ public:
 	Entity(const std::string& name, long id);
 	std::string getName() const;
 	long getId() const;
+
+	Entity(const Entity& entity) = delete;
 	
 	void setComponentIdx(ComponentType type, int containerIdx);
 	int getComponentIdx(ComponentType type) const;

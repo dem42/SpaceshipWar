@@ -1,11 +1,14 @@
 #pragma once
 
 #include "Engine/Component.h"
+#include "Game/AI/EnemyBehaviour.h"
 
 class EnemyComponent : public Component {
 public:
-	EnemyComponent(const Entity& entity) : Component(ComponentType::ENEMY, entity) {}
+	EnemyComponent(const std::shared_ptr<Entity>& entity, EnemyBehaviourType behaviourType) : Component(ComponentType::ENEMY, entity), behaviourType(behaviourType) {}
 
 	float timeUntilNextShotCanBeFired = 0;
+	EnemyBehaviourType behaviourType;
+	bool shooting = false;
 };
 

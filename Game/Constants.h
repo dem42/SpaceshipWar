@@ -9,6 +9,7 @@ namespace SpaceWarConstants {
 	const int SCREEN_WIDTH = 1000;
 	const int SCREEN_HEIGHT = 1000;
 
-	const float MAX_SHIP_SPEED = 200.0f;
+	const float MAX_SHIP_SPEED = 100.0f;
 	const float MAX_IMPULSE = 10.0f;
+	const float TORPEDO_SPEED = 1000.f;
 }

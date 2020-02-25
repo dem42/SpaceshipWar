@@ -7,6 +7,7 @@
 #include "Game/Graphics.h"
 #include "Game/Scene.h"
 
+#include "Systems/AISystem.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/TextureLoadingSystem.h"
 #include "Systems/InputHandlingSystem.h"
@@ -17,6 +18,7 @@ Game::Game() : graphics(), inputManager(), levelGenerator(), systems(), deltaTim
 {
 	systems.push_back(new TextureLoadingSystem(graphics));
 	systems.push_back(new InputHandlingSystem());
+	systems.push_back(new AISystem());
 	systems.push_back(new VelocityUpdateSystem());	
 	systems.push_back(new ShootingSystem());
 	systems.push_back(new MovementSystem());

@@ -11,12 +11,12 @@ void VelocityUpdateSystem::update(float dt, Scene& scene)
 	const float MINIMUM_IMPULSE = 0.001f;
 
 	for (auto& velocityComp : scene.velocities) {
-		if (!scene.headings.hasComponent(velocityComp.getParentEntity()) || !scene.positions.hasComponent(velocityComp.getParentEntity())) {
+		if (!scene.headings.hasComponent(velocityComp.getEntity()) || !scene.positions.hasComponent(velocityComp.getEntity())) {
 			continue;
 		}
 
-		const auto& heading = scene.headings.getComponent(velocityComp.getParentEntity());
-		const auto& position = scene.positions.getComponent(velocityComp.getParentEntity());
+		const auto& heading = scene.headings.getComponent(velocityComp.getEntity());
+		const auto& position = scene.positions.getComponent(velocityComp.getEntity());
 
 		float impulseDx = heading.xHeading - position.x;
 		float impulseDy = heading.yHeading - position.y;

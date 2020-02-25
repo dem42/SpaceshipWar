@@ -4,7 +4,7 @@
 
 class HeadingComponent : public Component {
 public:
-	HeadingComponent(const Entity& entity) : Component(ComponentType::HEADING, entity) {}
+	HeadingComponent(const std::shared_ptr<Entity>& entity) : Component(ComponentType::HEADING, entity) {}
 
 	float xHeading;
 	float yHeading;

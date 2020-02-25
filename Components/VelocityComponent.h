@@ -4,7 +4,7 @@
 
 class VelocityComponent : public Component {
 public:
-	VelocityComponent(const Entity& entity) : Component(ComponentType::VELOCITY, entity) {}
+	VelocityComponent(const std::shared_ptr<Entity>& entity) : Component(ComponentType::VELOCITY, entity) {}
 
 	float x;
 	float y;

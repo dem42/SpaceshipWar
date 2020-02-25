@@ -4,7 +4,7 @@
 
 class PlayerComponent : public Component {
 public:
-	PlayerComponent(const Entity& entity, const std::string& playerName) : Component(ComponentType::PLAYER, entity), playerName(playerName) {}
+	PlayerComponent(const std::shared_ptr<Entity>& entity, const std::string& playerName) : Component(ComponentType::PLAYER, entity), playerName(playerName) {}
 
 	std::string playerName;
 

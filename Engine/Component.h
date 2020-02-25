@@ -1,14 +1,19 @@
 #pragma once
 
+#include <memory>
+
 #include "Engine/Entity.h"
 
 class Component {
 public:
-	Component(ComponentType type, const Entity& entity);
-	const Entity& getParentEntity() const;
+	Component(ComponentType type, const std::shared_ptr<Entity>& entity);
+	
+	Entity& getEntity();
+	const Entity& getEntity() const;
+
 	ComponentType getType() const;
 
 private:
 	ComponentType type;
-	Entity entity;
+	std::shared_ptr<Entity> entity;
 };

@@ -1,7 +1,7 @@
 #pragma once
 
-#include <initializer_list>
 #include <vector>
+#include <memory>
 
 #include "Engine/ComponentContainer.h"
 #include "Engine/Entity.h"
@@ -19,10 +19,12 @@ class Scene {
 public:
 	Scene() = default;
 		
-	Entity createEntity(const std::string& name);
+	std::shared_ptr<Entity> createEntity(const std::string& name);
 	void createPoolOfShotEntities(int poolSize);
+	ShotComponent& getShotFromPool();
 
-	std::vector<Entity> entities;
+	std::shared_ptr<Entity> playerEntity;
+	std::vector<std::shared_ptr<Entity>> entities;
 	ComponentContainer<PositionComponent, ComponentType::POSITION> positions;
 	ComponentContainer<HeadingComponent, ComponentType::HEADING> headings;
 	ComponentContainer<VelocityComponent, ComponentType::VELOCITY> velocities;
@@ -36,4 +38,5 @@ public:
 
 private:
 	long entityIdGen = 0;
+	std::vector<ShotComponent>::iterator shotPoolRingBufTail;
 };

@@ -13,8 +13,8 @@ void MovementSystem::update(float dt, Scene& scene)
 	const double RAD_TO_DEG = (180.0 / 3.141592653589793238463);
 
 	for (const auto& velocity : scene.velocities) {
-		if (scene.positions.hasComponent(velocity.getParentEntity())) {
-			PositionComponent& positionCompo = scene.positions.getComponent(velocity.getParentEntity());
+		if (scene.positions.hasComponent(velocity.getEntity())) {
+			PositionComponent& positionCompo = scene.positions.getComponent(velocity.getEntity());
 						
 			if (std::fabs(velocity.magnitude) < MINIMUM_APPROACH_DIST) {
 				continue;

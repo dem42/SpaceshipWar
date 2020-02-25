@@ -143,6 +143,7 @@
     <ClCompile Include="Game\ResourceManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Game\Scene.cpp" />
+    <ClCompile Include="Systems\AISystem.cpp" />
     <ClCompile Include="Systems\MovementSystem.cpp" />
     <ClCompile Include="Systems\InputHandlingSystem.cpp" />
     <ClCompile Include="Systems\ShootingSystem.cpp" />
@@ -170,6 +171,7 @@
     <ClInclude Include="Components\PositionComponent.h" />
     <ClInclude Include="Engine\System.h" />
     <ClInclude Include="Game\Game.h" />
+    <ClInclude Include="Systems\AISystem.h" />
     <ClInclude Include="Systems\MovementSystem.h" />
     <ClInclude Include="Systems\InputHandlingSystem.h" />
     <ClInclude Include="Systems\ShootingSystem.h" />
