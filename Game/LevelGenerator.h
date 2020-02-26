@@ -4,20 +4,18 @@
 
 #include "Game/Scene.h"
 
+class RandomnessSource;
+
 class LevelGenerator {
 public:
-	LevelGenerator();
+	LevelGenerator(const std::shared_ptr<RandomnessSource>& randomnessSource);
 	Scene generateLevelScene(int level);
 
 private:
-	int levelGenSeed = 0xface;
-	std::mt19937 merse;
-	std::uniform_int_distribution<int> randomScreenXPos;
-	std::uniform_int_distribution<int> randomScreenYPos;
-	std::uniform_int_distribution<int> randomYaw;
-	std::uniform_int_distribution<std::size_t> randomEnemyBehaviour;
+	std::shared_ptr<RandomnessSource> randomnessSource;
 
 	void addPlayer(Scene& scene);
 	void addEnemy(Scene& scene, int num);
 	void addAnomaly(Scene& scene, int num);
+	void addUi(Scene& scene);
 };

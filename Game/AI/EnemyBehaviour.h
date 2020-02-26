@@ -3,11 +3,7 @@
 #include <array>
 #include <memory>
 
-enum class EnemyBehaviourType : std::size_t {
-	AGGRESSIVE,
-	COWARD,
-	_Count,
-};
+#include "Game/AI/EnemyBehaviourType.h"
 
 class Scene;
 class EnemyBehaviour;

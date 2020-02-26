@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cmath>
 
+#include "Engine/Utils.h"
 #include "Game/Constants.h"
 #include "Components/PositionComponent.h"
 
@@ -29,6 +30,10 @@ void MovementSystem::update(float dt, Scene& scene)
 						
 			positionCompo.x += velocity.x * dt;
 			positionCompo.y += velocity.y * dt;
+			if (positionCompo.getEntity().hasComponent(ComponentType::PLAYER) || positionCompo.getEntity().hasComponent(ComponentType::ENEMY)) {
+				positionCompo.x = clampToScreenX(positionCompo.x);
+				positionCompo.y = clampToScreenY(positionCompo.y);
+			}
 			positionCompo.yaw = targetYaw;
 		}	
 	}

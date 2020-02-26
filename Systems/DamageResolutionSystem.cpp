@@ -1,5 +1,16 @@
 #include "Systems/DamageResolutionSystem.h"
 
+#include "Game/Constants.h"
+
+void updateUi(const HitPointComponent& hp, Scene& scene)
+{
+	if (hp.getEntity().hasComponent(ComponentType::PLAYER)) {
+
+		auto& textUi = scene.textViews.getComponent(*scene.hpTextUiEntity);
+		textUi.text = SpaceWarConstants::HP_LABEL + std::to_string(hp.hitPoints);
+	}	
+}
+
 void DamageResolutionSystem::update(float dt, Scene& scene)
 {
 	for (auto& shot : scene.shots) {
@@ -17,6 +28,9 @@ void DamageResolutionSystem::update(float dt, Scene& scene)
 	for (auto& hp : scene.hitPoints) {
 		if (hp.damageTakenInFrame > 0) {
 			hp.hitPoints = (hp.hitPoints - hp.damageTakenInFrame <= 0) ? 0 : hp.hitPoints - hp.damageTakenInFrame;
+			
+			updateUi(hp, scene);
+			
 			if (hp.hitPoints == 0) {
 				if (hp.getEntity().hasComponent(ComponentType::ENEMY)) {
 					auto& enemy = scene.enemies.getComponent(hp.getEntity());

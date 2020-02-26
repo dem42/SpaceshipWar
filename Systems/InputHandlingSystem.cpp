@@ -2,12 +2,23 @@
 
 void InputHandlingSystem::update(float dt, Scene& scene)
 {
-	for (auto& headingCompo : scene.headings) {			
-		if (scene.players.hasComponent(headingCompo.getEntity())) {
-			PlayerComponent& playerInputCompo = scene.players.getComponent(headingCompo.getEntity());
+	for (auto& player : scene.players) {
+		if (!player.active) {
+			continue;
+		}
+		if (scene.headings.hasComponent(player.getEntity())) {
+			auto& heading = scene.headings.getComponent(player.getEntity());
 
-			headingCompo.xHeading = playerInputCompo.lastMouseX;
-			headingCompo.yHeading = playerInputCompo.lastMouseY;
+			heading.xHeading = player.lastMouseX;
+			heading.yHeading = player.lastMouseY;
+		}
+
+		if (player.pressedRightMouse) {
+			if (player.hyperdriveReady) {
+				player.hyperdriveActivated = true;
+			} 
+			player.pressedRightMouse = false;
 		}
 	}
+
 }

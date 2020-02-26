@@ -8,13 +8,15 @@
 
 #include "Components/PositionComponent.h"
 #include "Components/HeadingComponent.h"
-#include "Components/ViewComponent.h"
 #include "Components/PlayerComponent.h"
 #include "Components/VelocityComponent.h"
 
 #include "Components/EnemyComponent.h"
 #include "Components/ShotComponent.h"
 #include "Components/HitPointComponent.h"
+
+#include "Components/ViewComponent.h"
+#include "Components/TextUiViewComponent.h"
 
 class Scene {
 public:
@@ -26,13 +28,20 @@ public:
 	void createPoolOfShotEntities(int poolSize);
 	ShotComponent& getShotFromPool();
 
+	// special entities
 	std::shared_ptr<Entity> playerEntity;
+	std::shared_ptr<Entity> hpTextUiEntity;
+	std::shared_ptr<Entity> hyperdriveUiEntity;
+	std::shared_ptr<Entity> levelUiEntity;
+
+
 	std::vector<std::shared_ptr<Entity>> entities;
 	ComponentContainer<PositionComponent, ComponentType::POSITION> positions;
 	ComponentContainer<HeadingComponent, ComponentType::HEADING> headings;
 	ComponentContainer<VelocityComponent, ComponentType::VELOCITY> velocities;
 
 	ComponentContainer<ViewComponent, ComponentType::VIEW> views;
+	ComponentContainer<TextUiViewComponent, ComponentType::TEXT_UI_VIEW> textViews;
 
 	ComponentContainer<PlayerComponent, ComponentType::PLAYER> players;
 	ComponentContainer<EnemyComponent, ComponentType::ENEMY> enemies;	

@@ -3,6 +3,7 @@
 #include <vector>
 #include <memory>
 
+#include "Game/RandomnessSource.h"
 #include "Game/Graphics.h"
 #include "Game/InputManager.h"
 #include "Game/ResourceManager.h"
@@ -22,11 +23,11 @@ public:
 	Game& operator=(const Game&) = delete;
 	Game& operator=(const Game&&) = delete;
 
-	void loop();
-	void playRound(Scene& scene);
+	void loop();	
 	void advanceRound(bool wasWin);
 
 protected:
+	std::shared_ptr<RandomnessSource> randomnessSource;
 	Graphics graphics;
 	InputManager inputManager;
 	LevelGenerator levelGenerator;
@@ -34,7 +35,9 @@ protected:
 	std::vector<System*> systems;
 	float deltaTime;
 	int level;
+	bool stopRound;
 
+	void playRound(Scene& scene);
 	void updateDeltaTime();
 	void update(Scene& scene);
 };

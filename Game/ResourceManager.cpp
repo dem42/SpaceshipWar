@@ -1,6 +1,5 @@
 #include "Game/ResourceManager.h"
 
-#include <SDL.h>
 #include <SDL_image.h>
 #include <iostream>
 
@@ -9,6 +8,12 @@ ResourceManager::~ResourceManager()
 	for (auto& textureBankEntry : textureBank) {
 		SDL_DestroyTexture(textureBankEntry.second);
 	}
+}
+
+bool ResourceManager::loadFont(const std::string& fontPath)
+{
+	font = TTF_OpenFont(fontPath.c_str(), 24);
+	return font != nullptr;
 }
 
 void ResourceManager::loadTexture(SDL_Renderer* renderer, TextureKey& key)
@@ -61,7 +66,17 @@ SDL_Texture* ResourceManager::getTexture(const TextureKey& key)
 	return textureBank[key];
 }
 
-TextureKey::TextureKey(const std::string & path) : path(path), loaded(false)
+std::tuple<SDL_Texture*, int, int> ResourceManager::getText(SDL_Renderer* renderer, const std::string& text)
+{	
+	SDL_Surface* textSurface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface(renderer, textSurface);
+	int textWidth = textSurface->w;
+	int textHeight = textSurface->h;
+	SDL_FreeSurface(textSurface);	
+	return std::make_tuple(textTexture, textWidth, textHeight);
+}
+
+TextureKey::TextureKey(const std::string& path) : path(path), loaded(false)
 {
 }
 

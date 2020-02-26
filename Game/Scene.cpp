@@ -21,15 +21,13 @@ std::shared_ptr<Entity> Scene::createEntity(const std::string& name)
 void Scene::createPoolOfShotEntities(int poolSize)
 {	
 	for (int i = 0; i < poolSize; i++) {
-
-		std::stringstream strbuf;
-		strbuf << "Shot " << i;
-		auto torpedoEntity = createEntity(strbuf.str());
+		auto name = "Shot " + std::to_string(i);
+		auto torpedoEntity = createEntity(name);
 				
 		shots.addComponent(ShotComponent{ torpedoEntity });
 		velocities.addComponent(VelocityComponent{ torpedoEntity });
 		positions.addComponent(PositionComponent{ torpedoEntity, 0, 0, 0 });
-		views.addComponent(ViewComponent{ torpedoEntity, TextureKey{"images/torpedo_orange.png"}, 20, 20, -90, false });
+		views.addComponent(ViewComponent{ torpedoEntity, TextureKey{"res/tex/torpedo_orange.png"}, 20, 20, -90, false });
 	}
 	shotPoolRingBufTail = shots.begin();
 }

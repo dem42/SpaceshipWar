@@ -5,6 +5,8 @@
 namespace SpaceWarConstants {
 
 	const std::string PLAYER_1_ID = "player1";
+	const int PLAYER_HP = 5;
+
 	const int FPS = 60;
 	const int SCREEN_WIDTH = 1000;
 	const int SCREEN_HEIGHT = 1000;
@@ -19,6 +21,9 @@ namespace SpaceWarConstants {
 	const float TORPEDO_ACTIVAION_DIST_SQRD = 50.0;
 	const int TORPEDO_DAMAGE = 1;
 
-	const float HYPERDRIVE_TIMER = 5.0f;
+	const float HYPERDRIVE_TIMER = 10.0f;
 	const float VICTORY_LAP_DURATION = 1.0f;
+	
+	const std::string HYPERDRIVE_LABEL = "Hyperdrive(right-click): ";
+	const std::string HP_LABEL = "HP: ";
 }

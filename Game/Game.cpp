@@ -19,7 +19,8 @@
 #include "Systems/HyperdriveSystem.h"
 #include "Systems/RoundEndSystem.h"
 
-Game::Game() : graphics(), inputManager(), levelGenerator(), systems(), deltaTime(0.0f), level(1)
+Game::Game() : randomnessSource(std::make_shared<RandomnessSource>()), graphics(), inputManager(), 
+	levelGenerator(randomnessSource), systems(), deltaTime(0.0f), level(1), stopRound(false)
 {
 	systems.push_back(new RoundEndSystem(*this));
 	systems.push_back(new TextureLoadingSystem(graphics));	
@@ -27,7 +28,7 @@ Game::Game() : graphics(), inputManager(), levelGenerator(), systems(), deltaTim
 	systems.push_back(new AISystem());
 	systems.push_back(new VelocityUpdateSystem());	
 	systems.push_back(new ShootingSystem());
-	systems.push_back(new HyperdriveSystem());
+	systems.push_back(new HyperdriveSystem(randomnessSource));
 	systems.push_back(new MovementSystem());
 	systems.push_back(new DamageSystem());
 	systems.push_back(new DamageResolutionSystem());
@@ -42,7 +43,12 @@ Game::~Game()
 }
 
 void Game::loop()
-{
+{	
+	if (!graphics.isInitialized()) {
+		std::cerr << "Graphics failed to initialize. Check stderr output for errors." << std::endl;
+		return;
+	}
+
 	while (!inputManager.isCloseRequested()) {		
 		Scene scene = levelGenerator.generateLevelScene(level);
 		playRound(scene);
@@ -51,7 +57,8 @@ void Game::loop()
 
 void Game::playRound(Scene& scene)
 {
-	while (!inputManager.isCloseRequested() && level == scene.getLevel()) {
+	stopRound = false;
+	while (!inputManager.isCloseRequested() && !stopRound) {
 		updateDeltaTime();
 		update(scene);		
 	}
@@ -66,6 +73,7 @@ void Game::advanceRound(bool wasWin)
 	else {
 		level = 1;
 	}
+	stopRound = true;
 }
 
 void Game::updateDeltaTime()
@@ -87,7 +95,5 @@ void Game::update(Scene& scene)
 		system->update(deltaTime, scene);
 	}
 	
-	if (graphics.isInitialized()) {
-		graphics.render(scene);
-	}
+	graphics.render(scene);
 }

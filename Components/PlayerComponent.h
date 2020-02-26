@@ -22,5 +22,6 @@ public:
 	// hyperdrive stuff
 	float hyperdriveCharge = 0.f;
 	bool hyperdriveReady = false;
+	bool hyperdriveActivated = false;
 };
 

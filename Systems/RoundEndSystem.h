@@ -14,5 +14,6 @@ public:
 private:
 	float victoryLapTimer = 0.0f;
 	bool victoryLap = false;
+	bool wasVictory = false;
 	Game& game;
 };

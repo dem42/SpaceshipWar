@@ -1,6 +1,5 @@
 #pragma once
 
-#include <memory>
 #include "Game/ResourceManager.h"
 
 struct SDL_Window;

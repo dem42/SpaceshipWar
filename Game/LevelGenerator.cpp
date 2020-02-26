@@ -1,11 +1,11 @@
 #include "Game/LevelGenerator.h"
 
 #include "Game/Constants.h"
-#include <sstream>
+#include "Game/RandomnessSource.h"
 
-LevelGenerator::LevelGenerator() : merse(), randomScreenXPos(0, SpaceWarConstants::SCREEN_WIDTH), randomScreenYPos(0, SpaceWarConstants::SCREEN_HEIGHT), randomYaw(0, 359), randomEnemyBehaviour(0, static_cast<std::size_t>(EnemyBehaviourType::_Count)-1)
+LevelGenerator::LevelGenerator(const std::shared_ptr<RandomnessSource>& randomnessSource) : randomnessSource(randomnessSource)
 {
-	merse.seed(levelGenSeed);
+	
 }
 
 Scene LevelGenerator::generateLevelScene(int level)
@@ -17,8 +17,8 @@ Scene LevelGenerator::generateLevelScene(int level)
 	std::uniform_int_distribution<uint32_t> distEnem(1, level);
 	std::uniform_int_distribution<uint32_t> distAnomaly(0, level / 2);
 	
-	int numEnemies = distEnem(merse);
-	int numAnomaly = distAnomaly(merse);
+	int numEnemies = distEnem(randomnessSource->merse);
+	int numAnomaly = distAnomaly(randomnessSource->merse);
 
 	addPlayer(newScene);
 
@@ -32,42 +32,60 @@ Scene LevelGenerator::generateLevelScene(int level)
 
 	newScene.createPoolOfShotEntities((1 + numEnemies) * MAX_SHOTS_PER_ACTOR);
 
+	addUi(newScene);
+
 	return newScene;
+}
+
+void LevelGenerator::addUi(Scene& scene) 
+{
+	auto hpText = scene.createEntity("HpText");
+	scene.positions.addComponent(PositionComponent{ hpText, 55, SpaceWarConstants::SCREEN_HEIGHT - 20, 0 });
+	scene.textViews.addComponent(TextUiViewComponent{ hpText, SpaceWarConstants::HP_LABEL + std::to_string(SpaceWarConstants::PLAYER_HP), true });
+	scene.hpTextUiEntity = hpText;
+	
+	auto hyperdriveText = scene.createEntity("HyperdriveText");
+	scene.positions.addComponent(PositionComponent{ hyperdriveText, SpaceWarConstants::SCREEN_WIDTH - 200, SpaceWarConstants::SCREEN_HEIGHT - 20, 0 });
+	scene.textViews.addComponent(TextUiViewComponent{ hyperdriveText, SpaceWarConstants::HYPERDRIVE_LABEL + " 0%", true });
+	scene.hyperdriveUiEntity = hyperdriveText;
+	
+	auto levelText = scene.createEntity("LevelText");
+	scene.positions.addComponent(PositionComponent{ levelText, SpaceWarConstants::SCREEN_WIDTH / 2 - 20, 20, 0 });
+	scene.textViews.addComponent(TextUiViewComponent{ levelText, "Level: " + std::to_string(scene.getLevel()), true });
+	scene.levelUiEntity = levelText;
 }
 
 void LevelGenerator::addPlayer(Scene& scene)
 {
 	auto playerEntity = scene.createEntity("PlayerEntity");
 	scene.players.addComponent(PlayerComponent{ playerEntity, SpaceWarConstants::PLAYER_1_ID });
-	scene.hitPoints.addComponent(HitPointComponent{ playerEntity, 100});
+	scene.hitPoints.addComponent(HitPointComponent{ playerEntity, SpaceWarConstants::PLAYER_HP});
 	scene.positions.addComponent(PositionComponent{ playerEntity, 800, 800, 0 });
 	scene.headings.addComponent(HeadingComponent{ playerEntity });
 	scene.velocities.addComponent(VelocityComponent{ playerEntity });
-	scene.views.addComponent(ViewComponent{ playerEntity, TextureKey{"images/spaceship.png"}, 50, 50, -45, true });
+	scene.views.addComponent(ViewComponent{ playerEntity, TextureKey{"res/tex/spaceship.png"}, 50, 50, -45, true });
 
 	scene.playerEntity = playerEntity;
 }
 
 void LevelGenerator::addEnemy(Scene& scene, int num)
-{
-	std::stringstream strbuf;
-	strbuf << "Enemy " << num;
-	auto enemyEntity = scene.createEntity(strbuf.str());
+{	
+	auto name = "Enemy " + std::to_string(num);
+	auto enemyEntity = scene.createEntity(name);
 
-	scene.enemies.addComponent(EnemyComponent{ enemyEntity, static_cast<EnemyBehaviourType>(randomEnemyBehaviour(merse)) });
+	scene.enemies.addComponent(EnemyComponent{ enemyEntity, randomnessSource->sampleRandomEnemyBehaviour() });
 	scene.hitPoints.addComponent(HitPointComponent{ enemyEntity, 1 });
-	scene.positions.addComponent(PositionComponent{ enemyEntity, static_cast<float>(randomScreenXPos(merse)), static_cast<float>(randomScreenYPos(merse)), static_cast<float>(randomYaw(merse)) });
+	scene.positions.addComponent(PositionComponent{ enemyEntity, randomnessSource->sampleRandomScreenXPos(), randomnessSource->sampleRandomScreenYPos(), randomnessSource->sampleRandomYaw() });
 	scene.headings.addComponent(HeadingComponent{ enemyEntity });
 	scene.velocities.addComponent(VelocityComponent{ enemyEntity });
-	scene.views.addComponent(ViewComponent{ enemyEntity, TextureKey{"images/enemy.png"}, 50, 50, -45, true });
+	scene.views.addComponent(ViewComponent{ enemyEntity, TextureKey{"res/tex/enemy.png"}, 50, 50, -45, true });
 }
 
 void LevelGenerator::addAnomaly(Scene& scene, int num)
 {
-	std::stringstream strbuf;
-	strbuf << "Anomaly " << num;
-	auto anomalyEntity = scene.createEntity(strbuf.str());
+	auto name = "Anomaly " + std::to_string(num);
+	auto anomalyEntity = scene.createEntity(name);
 
-	scene.positions.addComponent(PositionComponent{ anomalyEntity, static_cast<float>(randomScreenXPos(merse)), static_cast<float>(randomScreenYPos(merse)), 0 });
-	scene.views.addComponent(ViewComponent{ anomalyEntity, TextureKey{"images/anomaly.png"}, 100, 100, -45, true });
+	scene.positions.addComponent(PositionComponent{ anomalyEntity, randomnessSource->sampleRandomScreenXPos(), randomnessSource->sampleRandomScreenYPos(), 0 });
+	scene.views.addComponent(ViewComponent{ anomalyEntity, TextureKey{"res/tex/anomaly.png"}, 100, 100, -45, true });
 }
