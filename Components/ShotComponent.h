@@ -7,7 +7,8 @@ public:
 	ShotComponent(const std::shared_ptr<Entity>& entity) : Component(ComponentType::SHOT, entity) {}
 
 	bool firedByPlayer = false;
-	float age = 0;
+	int reclaimsSurvived = 0;
 	bool available = true;
+	bool explode = false;
 };
 

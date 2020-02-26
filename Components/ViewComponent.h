@@ -17,5 +17,7 @@ public:
 	int height;
 	int width;
 	int imageBaseRotation;
+		
 	bool visible;
+	bool playExplosion = false;
 };

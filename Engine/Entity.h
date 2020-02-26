@@ -14,6 +14,7 @@ public:
 	
 	void setComponentIdx(ComponentType type, int containerIdx);
 	int getComponentIdx(ComponentType type) const;
+	bool hasComponent(ComponentType type) const;
 
 private:
 	std::string name;

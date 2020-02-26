@@ -2,6 +2,15 @@
 
 #include <sstream>
 
+Scene::Scene(int level) : level(level), entityIdGen(0), shotPoolRingBufTail()
+{
+}
+
+int Scene::getLevel() const
+{
+	return level;
+}
+
 std::shared_ptr<Entity> Scene::createEntity(const std::string& name)
 {
 	auto newEntity = std::make_shared<Entity>(name, entityIdGen++);

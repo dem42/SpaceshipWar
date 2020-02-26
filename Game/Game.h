@@ -23,6 +23,8 @@ public:
 	Game& operator=(const Game&&) = delete;
 
 	void loop();
+	void playRound(Scene& scene);
+	void advanceRound(bool wasWin);
 
 protected:
 	Graphics graphics;
@@ -31,6 +33,7 @@ protected:
 
 	std::vector<System*> systems;
 	float deltaTime;
+	int level;
 
 	void updateDeltaTime();
 	void update(Scene& scene);

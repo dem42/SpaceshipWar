@@ -12,7 +12,7 @@ Scene LevelGenerator::generateLevelScene(int level)
 {
 	const int MAX_SHOTS_PER_ACTOR = 5;
 
-	Scene newScene;
+	Scene newScene{ level };
 
 	std::uniform_int_distribution<uint32_t> distEnem(1, level);
 	std::uniform_int_distribution<uint32_t> distAnomaly(0, level / 2);
@@ -39,6 +39,7 @@ void LevelGenerator::addPlayer(Scene& scene)
 {
 	auto playerEntity = scene.createEntity("PlayerEntity");
 	scene.players.addComponent(PlayerComponent{ playerEntity, SpaceWarConstants::PLAYER_1_ID });
+	scene.hitPoints.addComponent(HitPointComponent{ playerEntity, 100});
 	scene.positions.addComponent(PositionComponent{ playerEntity, 800, 800, 0 });
 	scene.headings.addComponent(HeadingComponent{ playerEntity });
 	scene.velocities.addComponent(VelocityComponent{ playerEntity });
@@ -54,6 +55,7 @@ void LevelGenerator::addEnemy(Scene& scene, int num)
 	auto enemyEntity = scene.createEntity(strbuf.str());
 
 	scene.enemies.addComponent(EnemyComponent{ enemyEntity, static_cast<EnemyBehaviourType>(randomEnemyBehaviour(merse)) });
+	scene.hitPoints.addComponent(HitPointComponent{ enemyEntity, 1 });
 	scene.positions.addComponent(PositionComponent{ enemyEntity, static_cast<float>(randomScreenXPos(merse)), static_cast<float>(randomScreenYPos(merse)), static_cast<float>(randomYaw(merse)) });
 	scene.headings.addComponent(HeadingComponent{ enemyEntity });
 	scene.velocities.addComponent(VelocityComponent{ enemyEntity });

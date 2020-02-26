@@ -31,7 +31,7 @@ void InputManager::update(Scene& scene)
 				player1Input.holdingLeftMouse = true;
 			} else if (event.button.button == SDL_BUTTON_RIGHT) {
 				cout << "Use warp drive" << endl;
-				player1Input.pressedRightMouse = true;
+				player1Input.pressedRightMouse = true;				
 			}
 
 			break;
@@ -39,6 +39,7 @@ void InputManager::update(Scene& scene)
 		case SDL_MOUSEBUTTONUP:
 			if (event.button.button == SDL_BUTTON_LEFT) {
 				player1Input.holdingLeftMouse = false;
+				//player1Input.timeUntilNextShotCanBeFired = 0.f;
 			}
 			break;
 

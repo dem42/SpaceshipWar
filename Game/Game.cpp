@@ -13,15 +13,25 @@
 #include "Systems/InputHandlingSystem.h"
 #include "Systems/VelocityUpdateSystem.h"
 #include "Systems/ShootingSystem.h"
+#include "Systems/ShotReclaimSystem.h"
+#include "Systems/DamageSystem.h"
+#include "Systems/DamageResolutionSystem.h"
+#include "Systems/HyperdriveSystem.h"
+#include "Systems/RoundEndSystem.h"
 
-Game::Game() : graphics(), inputManager(), levelGenerator(), systems(), deltaTime(0.0f) 
+Game::Game() : graphics(), inputManager(), levelGenerator(), systems(), deltaTime(0.0f), level(1)
 {
-	systems.push_back(new TextureLoadingSystem(graphics));
+	systems.push_back(new RoundEndSystem(*this));
+	systems.push_back(new TextureLoadingSystem(graphics));	
 	systems.push_back(new InputHandlingSystem());
 	systems.push_back(new AISystem());
 	systems.push_back(new VelocityUpdateSystem());	
 	systems.push_back(new ShootingSystem());
+	systems.push_back(new HyperdriveSystem());
 	systems.push_back(new MovementSystem());
+	systems.push_back(new DamageSystem());
+	systems.push_back(new DamageResolutionSystem());
+	systems.push_back(new ShotReclaimSystem());
 }
 
 Game::~Game() 
@@ -33,11 +43,28 @@ Game::~Game()
 
 void Game::loop()
 {
-	Scene scene = levelGenerator.generateLevelScene(15);
+	while (!inputManager.isCloseRequested()) {		
+		Scene scene = levelGenerator.generateLevelScene(level);
+		playRound(scene);
+	}
+}
 
-	while (!inputManager.isCloseRequested()) {
+void Game::playRound(Scene& scene)
+{
+	while (!inputManager.isCloseRequested() && level == scene.getLevel()) {
 		updateDeltaTime();
-		update(scene);
+		update(scene);		
+	}
+}
+
+void Game::advanceRound(bool wasWin)
+{
+	if (wasWin) {
+		std::cout << "won level " << level << std::endl;
+		level++;
+	}
+	else {
+		level = 1;
 	}
 }
 

@@ -14,10 +14,13 @@
 
 #include "Components/EnemyComponent.h"
 #include "Components/ShotComponent.h"
+#include "Components/HitPointComponent.h"
 
 class Scene {
 public:
-	Scene() = default;
+	Scene(int level);
+
+	int getLevel() const;
 		
 	std::shared_ptr<Entity> createEntity(const std::string& name);
 	void createPoolOfShotEntities(int poolSize);
@@ -35,8 +38,10 @@ public:
 	ComponentContainer<EnemyComponent, ComponentType::ENEMY> enemies;	
 
 	ComponentContainer<ShotComponent, ComponentType::SHOT> shots;
+	ComponentContainer<HitPointComponent, ComponentType::HIT_POINTS> hitPoints;
 
 private:
-	long entityIdGen = 0;
+	int level;
+	long entityIdGen;
 	std::vector<ShotComponent>::iterator shotPoolRingBufTail;
 };

@@ -1,6 +1,8 @@
 #include "Game/AI/EnemyBehaviour.h"
 
+#include "Engine/Utils.h"
 #include "Game/Scene.h"
+#include "Game/Constants.h"
 #include "Components/EnemyComponent.h"
 
 EnemeyBehaviourMap EnemyBehaviour::behaviourMap;
@@ -53,8 +55,8 @@ public:
 		auto& enemyHeading = scene.headings.getComponent(enemyComponent.getEntity());
 		const auto& enemyPosition = scene.positions.getComponent(enemyComponent.getEntity());
 
-		enemyHeading.xHeading = -2*(playerPosition.x - enemyPosition.x);
-		enemyHeading.yHeading = -2*(playerPosition.y - enemyPosition.y);
+		enemyHeading.xHeading = clampToScreenX(3 * enemyPosition.x - 2 * playerPosition.x);
+		enemyHeading.yHeading = clampToScreenY(3 * enemyPosition.y - 2 * playerPosition.y);
 	}
 };
 

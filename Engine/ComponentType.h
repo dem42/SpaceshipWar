@@ -10,6 +10,7 @@ enum class ComponentType : std::size_t {
 	VELOCITY,
 	SHOT,
 	ENEMY,
+	HIT_POINTS,
 	_Count
 };
 

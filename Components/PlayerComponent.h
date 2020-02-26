@@ -8,6 +8,8 @@ public:
 
 	std::string playerName;
 
+	bool active = true;
+
 	float timeUntilNextShotCanBeFired = 0;
 
 	bool holdingLeftMouse = false;
@@ -16,5 +18,9 @@ public:
 	bool hasStreeringInput = false;
 	float lastMouseX = 0;
 	float lastMouseY = 0;
+
+	// hyperdrive stuff
+	float hyperdriveCharge = 0.f;
+	bool hyperdriveReady = false;
 };
 

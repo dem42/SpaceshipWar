@@ -24,3 +24,9 @@ int Entity::getComponentIdx(ComponentType type) const
 {
 	return componentIdx[static_cast<std::size_t>(type)];
 }
+
+
+bool Entity::hasComponent(ComponentType type) const
+{
+	return componentIdx[static_cast<std::size_t>(type)] != COMPONENT_NOT_PRESENT;
+}

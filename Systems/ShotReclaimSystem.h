@@ -2,7 +2,10 @@
 
 #include "Engine/System.h"
 
-class DamageSystem : public System {
+class ShotReclaimSystem : public System {
 public:
 	void update(float dt, Scene& scene) override;
+
+private:
+	float timeSinceReclaim = 0.0f;	
 };
