@@ -84,7 +84,7 @@ Scene LevelGenerator::generateTutorial() const {
 
 	auto text6 = scene.createEntity("TutorialText6");
 	scene.positions.addComponent(PositionComponent{ text6, 500, 700, 0 });
-	scene.textViews.addComponent(TextUiViewComponent{ text6, "Press ENTER to begin.", true });
+	scene.textViews.addComponent(TextUiViewComponent{ text6, "Press left-click to begin.", true });
 	
 	auto hpText = scene.createEntity("HpText");
 	scene.positions.addComponent(PositionComponent{ hpText, 55, SpaceWarConstants::SCREEN_HEIGHT - 20, 0 });

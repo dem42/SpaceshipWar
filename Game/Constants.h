@@ -23,7 +23,7 @@ namespace SpaceWarConstants {
 	const float TORPEDO_PLAYER_ACTIVAION_DIST_SQRD = 175.0f;
 	const int TORPEDO_DAMAGE = 1;
 
-	const float HYPERDRIVE_TIMER = 10.0f;
+	const float HYPERDRIVE_TIMER = 7.0f;
 	const float VICTORY_LAP_DURATION = 1.0f;
 	
 	const std::string HYPERDRIVE_LABEL = "Hyperdrive(right-click): ";

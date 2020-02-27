@@ -20,7 +20,8 @@ void InputManager::update(Scene& scene)
 
 		case SDL_MOUSEBUTTONDOWN:
 			if (scene.getLevel() == 0) {
-				continue;
+				player1Input.closeTutorial = true;
+				break;
 			}
 			if (event.button.button == SDL_BUTTON_LEFT) {				
 				player1Input.holdingLeftMouse = true;
@@ -40,14 +41,7 @@ void InputManager::update(Scene& scene)
 			player1Input.hasStreeringInput = true;
 			player1Input.lastMouseX = static_cast<float>(event.motion.x);
 			player1Input.lastMouseY = static_cast<float>(event.motion.y);
-			break;			
-
-		case SDL_KEYDOWN:
-			switch (event.key.keysym.scancode) {
-			case SDL_SCANCODE_RETURN:
-				player1Input.closeTutorial = true;
-				break;
-			}
+			break;		
 		}
 	}
 }
