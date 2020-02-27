@@ -13,26 +13,26 @@
 #include "Systems/InputHandlingSystem.h"
 #include "Systems/VelocityUpdateSystem.h"
 #include "Systems/ShootingSystem.h"
-#include "Systems/ShotReclaimSystem.h"
+#include "Systems/CleanupSystem.h"
 #include "Systems/DamageSystem.h"
 #include "Systems/DamageResolutionSystem.h"
 #include "Systems/HyperdriveSystem.h"
 #include "Systems/RoundEndSystem.h"
 
 Game::Game() : randomnessSource(std::make_shared<RandomnessSource>()), graphics(), inputManager(), 
-	levelGenerator(randomnessSource), systems(), deltaTime(0.0f), level(1), stopRound(false)
+	levelGenerator(randomnessSource), systems(), deltaTime(0.0f), level(0), stopRound(false)
 {
-	systems.push_back(new RoundEndSystem(*this));
-	systems.push_back(new TextureLoadingSystem(graphics));	
+	systems.push_back(new RoundEndSystem(*this));	
 	systems.push_back(new InputHandlingSystem());
-	systems.push_back(new AISystem());
+	systems.push_back(new AISystem(randomnessSource));
 	systems.push_back(new VelocityUpdateSystem());	
 	systems.push_back(new ShootingSystem());
 	systems.push_back(new HyperdriveSystem(randomnessSource));
 	systems.push_back(new MovementSystem());
 	systems.push_back(new DamageSystem());
 	systems.push_back(new DamageResolutionSystem());
-	systems.push_back(new ShotReclaimSystem());
+	systems.push_back(new CleanupSystem());
+	systems.push_back(new TextureLoadingSystem(graphics));
 }
 
 Game::~Game() 

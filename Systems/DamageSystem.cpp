@@ -18,16 +18,18 @@ void DamageSystem::update(float dt, Scene& scene)
 
 		bool firedByPlayer = shot.firedByPlayer;
 
-		auto isWithinShotActivationRadius = [firedByPlayer, &shotPosition](const PositionComponent& position) {
+		auto isWithinShotActivationRadius = [&](const PositionComponent& position) {
 
 			bool isPlayer = position.getEntity().hasComponent(ComponentType::PLAYER);
 			bool isEnemy = position.getEntity().hasComponent(ComponentType::ENEMY);
 			
 			if (isEnemy && firedByPlayer) {
-				return PositionComponent::distanceSqrd(shotPosition, position) < SpaceWarConstants::TORPEDO_ACTIVAION_DIST_SQRD;
+				bool isEnemyActive = scene.enemies.getComponent(position.getEntity()).active;
+				return isEnemyActive && PositionComponent::distanceSqrd(shotPosition, position) < SpaceWarConstants::TORPEDO_ENEMY_ACTIVAION_DIST_SQRD;
 			}
 			else if (isPlayer && !firedByPlayer) {
-				return PositionComponent::distanceSqrd(shotPosition, position) < SpaceWarConstants::TORPEDO_ACTIVAION_DIST_SQRD;
+				bool isPlayerActive = scene.players.getComponent(position.getEntity()).active;
+				return isPlayerActive && PositionComponent::distanceSqrd(shotPosition, position) < SpaceWarConstants::TORPEDO_PLAYER_ACTIVAION_DIST_SQRD;
 			}
 			return false;
 		};

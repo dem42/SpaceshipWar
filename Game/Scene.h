@@ -14,6 +14,8 @@
 #include "Components/EnemyComponent.h"
 #include "Components/ShotComponent.h"
 #include "Components/HitPointComponent.h"
+#include "Components/ExplosionComponent.h"
+#include "Components/AnomalyComponent.h"
 
 #include "Components/ViewComponent.h"
 #include "Components/TextUiViewComponent.h"
@@ -27,6 +29,9 @@ public:
 	std::shared_ptr<Entity> createEntity(const std::string& name);
 	void createPoolOfShotEntities(int poolSize);
 	ShotComponent& getShotFromPool();
+
+	void createPoolOfExplosion(int poolSize);
+	ExplosionComponent& getExplosionFromPool();
 
 	// special entities
 	std::shared_ptr<Entity> playerEntity;
@@ -45,12 +50,15 @@ public:
 
 	ComponentContainer<PlayerComponent, ComponentType::PLAYER> players;
 	ComponentContainer<EnemyComponent, ComponentType::ENEMY> enemies;	
+	ComponentContainer<AnomalyComponent, ComponentType::ANOMALY> anomalies;	
 
 	ComponentContainer<ShotComponent, ComponentType::SHOT> shots;
 	ComponentContainer<HitPointComponent, ComponentType::HIT_POINTS> hitPoints;
+	ComponentContainer<ExplosionComponent, ComponentType::EXPLOSION> explosions;
 
 private:
 	int level;
 	long entityIdGen;
 	std::vector<ShotComponent>::iterator shotPoolRingBufTail;
+	std::vector<ExplosionComponent>::iterator explosionPoolRingBufTail;
 };

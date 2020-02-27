@@ -1,8 +1,8 @@
 #include "Scene.h"
 
-#include <sstream>
+#include "Game/Constants.h"
 
-Scene::Scene(int level) : level(level), entityIdGen(0), shotPoolRingBufTail()
+Scene::Scene(int level) : level(level), entityIdGen(0), shotPoolRingBufTail(), explosionPoolRingBufTail()
 {
 }
 
@@ -27,11 +27,35 @@ void Scene::createPoolOfShotEntities(int poolSize)
 		shots.addComponent(ShotComponent{ torpedoEntity });
 		velocities.addComponent(VelocityComponent{ torpedoEntity });
 		positions.addComponent(PositionComponent{ torpedoEntity, 0, 0, 0 });
-		views.addComponent(ViewComponent{ torpedoEntity, TextureKey{"res/tex/torpedo_orange.png"}, 20, 20, -90, false });
+		views.addComponent(ViewComponent{ torpedoEntity, TextureKey{SpaceWarTextures::TORPEDO}, 20, 20, -90, SpaceWarZ::TORPEDO_LAYER, false });
 	}
 	shotPoolRingBufTail = shots.begin();
 }
 
+void Scene::createPoolOfExplosion(int poolSize)
+{
+	for (int i = 0; i < poolSize; i++) {
+		auto name = "Explosion " + std::to_string(i);
+		auto explosionEntity = createEntity(name);
+
+		explosions.addComponent(ExplosionComponent{ explosionEntity });		
+		positions.addComponent(PositionComponent{ explosionEntity, 0, 0, 0 });
+		views.addComponent(ViewComponent{ explosionEntity, TextureKey{SpaceWarTextures::EXPLOSION_SMALL}, 40, 40, -90, SpaceWarZ::EXPLOSION_LAYER, false });
+	}
+	explosionPoolRingBufTail = explosions.begin();
+}
+
+ExplosionComponent& Scene::getExplosionFromPool()
+{
+	if (explosionPoolRingBufTail == explosions.end()) {
+		explosionPoolRingBufTail = explosions.begin();
+	}
+
+	auto& explosionComp = *explosionPoolRingBufTail;
+	explosionPoolRingBufTail++;
+
+	return explosionComp;
+}
 
 ShotComponent& Scene::getShotFromPool()
 {

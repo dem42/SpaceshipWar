@@ -12,6 +12,8 @@ enum class ComponentType : std::size_t {
 	ENEMY,
 	HIT_POINTS,
 	TEXT_UI_VIEW,
+	EXPLOSION,
+	ANOMALY,
 	_Count
 };
 

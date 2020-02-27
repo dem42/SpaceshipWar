@@ -1,11 +1,13 @@
 #pragma once
 
+#include <vector>
 #include "Game/ResourceManager.h"
 
 struct SDL_Window;
 struct SDL_Renderer;
 
 class Scene;
+class ViewComponent;
 
 class Graphics {
 public:
@@ -27,4 +29,5 @@ private:
 	bool hasError;
 	SDL_Window* win;
 	SDL_Renderer* rend;
+	std::vector<ViewComponent> sortedViews;
 };

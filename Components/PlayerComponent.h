@@ -18,6 +18,7 @@ public:
 	bool hasStreeringInput = false;
 	float lastMouseX = 0;
 	float lastMouseY = 0;
+	bool closeTutorial = false;
 
 	// hyperdrive stuff
 	float hyperdriveCharge = 0.f;

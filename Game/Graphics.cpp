@@ -1,14 +1,15 @@
 #include "Game/Graphics.h"
 
+#include <algorithm>
 #include <iostream>
+#include <tuple>
 #include <SDL.h>
 #include <SDL_ttf.h>
-#include <tuple>
 
 #include "Game/Scene.h"
 #include "Game/Constants.h"
 
-Graphics::Graphics() : resourceManager(), hasError(false), win(nullptr), rend(nullptr)
+Graphics::Graphics() : resourceManager(), hasError(false), win(nullptr), rend(nullptr), sortedViews()
 {	
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		hasError = true;
@@ -41,11 +42,20 @@ Graphics::~Graphics()
 	SDL_Quit();
 }
 
+bool zOrderComparatorDecreasing(const ViewComponent& left, const ViewComponent& right)
+{
+	return left.zOrder > right.zOrder;
+}
+
 void Graphics::render(Scene& scene)
 {	
 	SDL_RenderClear(rend);
 
-	for (const auto& viewComponent : scene.views) {		
+	sortedViews.assign(scene.views.begin(), scene.views.end());
+	
+	std::stable_sort(sortedViews.begin(), sortedViews.end(), zOrderComparatorDecreasing);
+
+	for (const auto& viewComponent : sortedViews) {		
 		if (viewComponent.visible && scene.positions.hasComponent(viewComponent.getEntity())) {
 			auto& positionComponent = scene.positions.getComponent(viewComponent.getEntity());
 

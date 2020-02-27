@@ -19,6 +19,14 @@ void RoundEndSystem::update(float dt, Scene& scene)
 	}
 
 	auto& player = scene.players.getComponent(*scene.playerEntity);
+
+	if (scene.getLevel() == 0) {		
+		if (player.closeTutorial) {
+			game.advanceRound(true);
+		}
+		return;
+	}
+
 	if (!player.active) {		
 		victoryLap = true;
 		wasVictory = false;

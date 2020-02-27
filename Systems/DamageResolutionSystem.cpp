@@ -11,6 +11,30 @@ void updateUi(const HitPointComponent& hp, Scene& scene)
 	}	
 }
 
+void addExplosion(const Entity& entityThatExploded, Scene& scene, bool isBig)
+{
+	auto& explosion = scene.getExplosionFromPool();
+	explosion.active = true;
+	explosion.timeUntilHidden = 0.0f;
+	
+	const auto& posOfExplosion = scene.positions.getComponent(entityThatExploded);
+	auto& posForCopy = scene.positions.getComponent(explosion.getEntity());
+
+	posForCopy.x = posOfExplosion.x;
+	posForCopy.y = posOfExplosion.y;
+
+	auto& view = scene.views.getComponent(explosion.getEntity());
+	view.visible = true;
+	if (isBig) {
+		view.height = 50;
+		view.width = 50;
+	}
+	else {
+		view.height = 20;
+		view.width = 20;
+	}
+}
+
 void DamageResolutionSystem::update(float dt, Scene& scene)
 {
 	for (auto& shot : scene.shots) {
@@ -21,7 +45,8 @@ void DamageResolutionSystem::update(float dt, Scene& scene)
 
 			auto& view = scene.views.getComponent(shot.getEntity());
 			view.visible = false;
-			view.playExplosion = true;
+
+			addExplosion(shot.getEntity(), scene, false);
 		}
 	}
 
@@ -43,7 +68,8 @@ void DamageResolutionSystem::update(float dt, Scene& scene)
 
 				auto& view = scene.views.getComponent(hp.getEntity());
 				view.visible = false;
-				view.playExplosion = true;
+
+				addExplosion(hp.getEntity(), scene, true);
 			}
 			hp.damageTakenInFrame = 0;
 		}

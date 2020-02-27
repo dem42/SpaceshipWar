@@ -133,6 +133,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Components\EnemyComponent.cpp" />
     <ClCompile Include="Components\PositionComponent.cpp" />
     <ClCompile Include="Engine\Component.cpp" />
     <ClCompile Include="Engine\Entity.cpp" />
@@ -154,12 +155,14 @@
     <ClCompile Include="Systems\MovementSystem.cpp" />
     <ClCompile Include="Systems\InputHandlingSystem.cpp" />
     <ClCompile Include="Systems\ShootingSystem.cpp" />
-    <ClCompile Include="Systems\ShotReclaimSystem.cpp" />
+    <ClCompile Include="Systems\CleanupSystem.cpp" />
     <ClCompile Include="Systems\TextureLoadingSystem.cpp" />
     <ClCompile Include="Systems\VelocityUpdateSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Components\AnomalyComponent.h" />
     <ClInclude Include="Components\EnemyComponent.h" />
+    <ClInclude Include="Components\ExplosionComponent.h" />
     <ClInclude Include="Components\HeadingComponent.h" />
     <ClInclude Include="Components\HitPointComponent.h" />
     <ClInclude Include="Components\PlayerComponent.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="Engine\ComponentType.h" />
     <ClInclude Include="Engine\Entity.h" />
     <ClInclude Include="Engine\Utils.h" />
+    <ClInclude Include="Game\AI\AiParams.h" />
     <ClInclude Include="Game\AI\EnemyBehaviour.h" />
     <ClInclude Include="Components\ShotComponent.h" />
     <ClInclude Include="Game\AI\EnemyBehaviourType.h" />
@@ -192,7 +196,7 @@
     <ClInclude Include="Systems\MovementSystem.h" />
     <ClInclude Include="Systems\InputHandlingSystem.h" />
     <ClInclude Include="Systems\ShootingSystem.h" />
-    <ClInclude Include="Systems\ShotReclaimSystem.h" />
+    <ClInclude Include="Systems\CleanupSystem.h" />
     <ClInclude Include="Systems\TextureLoadingSystem.h" />
     <ClInclude Include="Systems\VelocityUpdateSystem.h" />
   </ItemGroup>

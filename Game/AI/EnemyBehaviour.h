@@ -8,6 +8,7 @@
 class Scene;
 class EnemyBehaviour;
 class EnemyComponent;
+class RandomnessSource;
 
 class EnemeyBehaviourMap {
 public:
@@ -21,11 +22,12 @@ class EnemyBehaviour {
 public:	
 	EnemyBehaviour(EnemyBehaviourType type);
 
-	virtual void act(EnemyComponent& enemyComponent, float dt, Scene& scene) const = 0;
+	virtual void act(EnemyComponent& enemyComponent, float dt, Scene& scene, const std::shared_ptr<RandomnessSource>& rand) const = 0;
 	
 	EnemyBehaviourType getType() const;
 
 	static EnemeyBehaviourMap behaviourMap;
+
 private:
 	EnemyBehaviourType type;
 };
